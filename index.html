@@ -108,14 +108,17 @@ tfoot td { font-weight:bold; background:#eee; }
 
   <div id="tekliAlan">
     <label>Karşı Takımın Per Olmayan Taş Toplamı:</label>
-    <input type="number" id="perOlmayanToplam" placeholder="örn. 45">
+    <input type="number" id="perOlmayanToplam" placeholder="örn. 45"
+     inputmode="numeric" pattern="[0-9]*"> <!-- DEĞİŞİKLİK -->
   </div>
 
   <div id="kimseBitmediAlani">
     <label id="lblA">Takım A Per Olmayan Taş Toplamı:</label>
-    <input type="number" id="tasA" placeholder="örn. 45">
+    <input type="number" id="tasA" placeholder="örn. 45"
+     inputmode="numeric" pattern="[0-9]*"> <!-- DEĞİŞİKLİK -->
     <label id="lblB">Takım B Per Olmayan Taş Toplamı:</label>
-    <input type="number" id="tasB" placeholder="örn. 60">
+    <input type="number" id="tasB" placeholder="örn. 60"
+     inputmode="numeric" pattern="[0-9]*"> <!-- DEĞİŞİKLİK -->
   </div>
 
   <label>Biten taraf okey ile mi bitti?</label>
