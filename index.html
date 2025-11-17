@@ -109,16 +109,14 @@ tfoot td { font-weight:bold; background:#eee; }
   <div id="tekliAlan">
     <label>Karşı Takımın Per Olmayan Taş Toplamı:</label>
     <input type="number" id="perOlmayanToplam" placeholder="örn. 45"
-     inputmode="numeric" pattern="[0-9]*"> <!-- DEĞİŞİKLİK -->
+     inputmode="numeric" pattern="[0-9]*">
   </div>
 
   <div id="kimseBitmediAlani">
     <label id="lblA">Takım A Per Olmayan Taş Toplamı:</label>
-    <input type="number" id="tasA" placeholder="örn. 45"
-     inputmode="numeric" pattern="[0-9]*"> <!-- DEĞİŞİKLİK -->
+    <input type="number" id="tasA" placeholder="örn. 45" inputmode="numeric" pattern="[0-9]*">
     <label id="lblB">Takım B Per Olmayan Taş Toplamı:</label>
-    <input type="number" id="tasB" placeholder="örn. 60"
-     inputmode="numeric" pattern="[0-9]*"> <!-- DEĞİŞİKLİK -->
+    <input type="number" id="tasB" placeholder="örn. 60" inputmode="numeric" pattern="[0-9]*">
   </div>
 
   <label>Biten taraf okey ile mi bitti?</label>
@@ -143,6 +141,11 @@ tfoot td { font-weight:bold; background:#eee; }
   </table>
 
   <div id="kazanan"></div>
+
+  <!-- ⭐ 11 el sonunda görünecek ekran görüntüsü butonu -->
+  <button id="ssBtn" style="display:none; background:#444; margin-top:20px;"
+          onclick="tabloSS()">📸 Skor Tablosu Ekran Görüntüsü</button>
+
 </div>
 
 <script>
@@ -226,6 +229,7 @@ function elEkle(){
   tbody.appendChild(row);
   document.getElementById("toplamA").innerText=toplamA;
   document.getElementById("toplamB").innerText=toplamB;
+
   if(elSayisi===maxEl) kazanan();
 }
 
@@ -246,6 +250,7 @@ function sifirla(){
   document.getElementById("toplamB").innerText="0";
   document.getElementById("kazanan").classList.remove("show");
   document.getElementById("kazanan").innerText="";
+  document.getElementById("ssBtn").style.display="none";  /* ⭐ butonu gizle */
   kaydetDurum();
 }
 
@@ -257,6 +262,8 @@ function kazanan(){
   else if(toplamB<toplamA) div.innerText=`🏆 Kazanan: ${b} (${toplamB} - ${toplamA})`;
   else div.innerText=`🤝 Berabere! (${toplamA} - ${toplamB})`;
   div.classList.add("show");
+
+  document.getElementById("ssBtn").style.display="block";  /* ⭐ 11 el bitince göster */
 }
 
 // --- LocalStorage ile durum saklama ---
@@ -299,10 +306,29 @@ function yukleDurum(){
   document.getElementById("tekliAlan").style.display=bitenTakim==="yok"?"none":"block";
   document.getElementById("kimseBitmediAlani").style.display=bitenTakim==="yok"?"block":"none";
 
-  if(elSayisi>=maxEl) kazanan();
+  if(elSayisi>=maxEl) {
+    kazanan();
+    document.getElementById("ssBtn").style.display="block";
+  }
 }
 
 yukleDurum();
+
+
+// ⭐ SADECE SKOR TABLOSUNUN SS’İNİ ALMA FONKSİYONU
+function tabloSS(){
+  const tablo = document.getElementById("puanTablosu");
+  html2canvas(tablo).then(canvas=>{
+    const link=document.createElement("a");
+    link.download="skor_tablosu.png";
+    link.href=canvas.toDataURL();
+    link.click();
+  });
+}
 </script>
+
+<!-- ⭐ Ekran görüntüsü için gerekli kütüphane -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 </body>
 </html>
