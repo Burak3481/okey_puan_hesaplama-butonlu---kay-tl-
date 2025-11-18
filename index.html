@@ -250,7 +250,7 @@ function sifirla(){
   document.getElementById("toplamB").innerText="0";
   document.getElementById("kazanan").classList.remove("show");
   document.getElementById("kazanan").innerText="";
-  document.getElementById("ssBtn").style.display="none";  /* ⭐ butonu gizle */
+  document.getElementById("ssBtn").style.display="none";
   kaydetDurum();
 }
 
@@ -263,10 +263,10 @@ function kazanan(){
   else div.innerText=`🤝 Berabere! (${toplamA} - ${toplamB})`;
   div.classList.add("show");
 
-  document.getElementById("ssBtn").style.display="block";  /* ⭐ 11 el bitince göster */
+  document.getElementById("ssBtn").style.display="block";
 }
 
-// --- LocalStorage ile durum saklama ---
+// --- SessionStorage ile sekme bazlı durum saklama ---
 function kaydetDurum(){
   const data={
     elSayisi, toplamA, toplamB, bitenTakim, okeyRenk, okeyBitis,
@@ -276,11 +276,11 @@ function kaydetDurum(){
       innerHTML: tr.innerHTML, className: tr.className, dataset: {a: tr.dataset.a, b: tr.dataset.b}
     }))
   };
-  localStorage.setItem("okeyDurum", JSON.stringify(data));
+  sessionStorage.setItem("okeyDurum", JSON.stringify(data));
 }
 
 function yukleDurum(){
-  const data=JSON.parse(localStorage.getItem("okeyDurum"));
+  const data=JSON.parse(sessionStorage.getItem("okeyDurum"));
   if(!data) return;
   elSayisi=data.elSayisi; toplamA=data.toplamA; toplamB=data.toplamB;
   bitenTakim=data.bitenTakim; okeyRenk=data.okeyRenk; okeyBitis=data.okeyBitis;
@@ -314,8 +314,6 @@ function yukleDurum(){
 
 yukleDurum();
 
-
-// ⭐ SADECE SKOR TABLOSUNUN SS’İNİ ALMA FONKSİYONU
 function tabloSS(){
   const tablo = document.getElementById("puanTablosu");
   html2canvas(tablo).then(canvas=>{
@@ -326,6 +324,7 @@ function tabloSS(){
   });
 }
 </script>
+
 
 <!-- ⭐ Ekran görüntüsü için gerekli kütüphane -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
